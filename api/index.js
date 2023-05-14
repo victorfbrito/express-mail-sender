@@ -26,7 +26,11 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/send_mail', (req, res) => {
+  console.log('req body: ', req.body)
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   SendMail(req.body)
+  res.end(`Hello! mail sent to ${process.env.MAIL_USERNAME}`);
   return
 });
 
