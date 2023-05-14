@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import { v4 } from "uuid";
+
 import { SendMail } from "./routes.js";
 dotenv.config()
 // console.log(process.env) // remove this after you've confirmed it is working
@@ -15,6 +17,13 @@ const corsConfig = {
     origin: true,
 };
 app.use(cors(corsConfig));
+
+app.get('/api', (req, res) => {
+  const path = `/api/item/${v4()}`;
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+});
 
 app.post('/api/send_mail', (req, res) => {
   SendMail(req.body)
