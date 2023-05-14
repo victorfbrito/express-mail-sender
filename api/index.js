@@ -16,16 +16,16 @@ const corsConfig = {
 };
 app.use(cors(corsConfig));
 
-app.post('/send_mail', (req, res) => {
+app.post('/api/send_mail', (req, res) => {
   SendMail(req.body)
   return
 });
 
-app.get('/send_mail', (req, res) => {
+app.get('/api/send_mail', (req, res) => {
   return res.json({res: 'test'})
 });
 
-app.get('/', () => { console.log('test')})
+app.get('/api/', () => { console.log('test')})
 
 app.listen(port, () => {
   console.log(`nodemailerProject is listening at http://localhost:${port}`)

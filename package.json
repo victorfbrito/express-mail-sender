@@ -1,10 +1,10 @@
 {
   "name": "nodejs-nodemailer",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "api/index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon api/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
