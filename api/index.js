@@ -25,10 +25,6 @@ const corsOptions = {
 // Enable CORS for the specific route
 app.options('/api/send_mail', cors(corsOptions));
 
-app.get('/api', (req, res) => {
-  res.json({ msg: `Hello! Front-url: ${process.env.FRONT_URL}` });
-});
-
 app.post('/api/send_mail', cors(corsOptions), (req, res) => {
   console.log('req body: ', req.body);
   SendMail(req.body);
@@ -39,8 +35,8 @@ app.get('/api/send_mail', (req, res) => {
   res.json({ res: 'test' });
 });
 
-app.get('/api/', () => {
-  console.log('test');
+app.get('/api', (req, res) => {
+  res.json({ msg: `Hello! Front-url: ${process.env.FRONT_URL}` });
 });
 
 app.listen(port, () => {
