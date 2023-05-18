@@ -13,11 +13,11 @@ const port = 3000
 app.use(express.json()); // Middleware for parsing request body as JSON
 
 const corsConfig = {
+  credentials: true,
   origin: `${process.env.FRONT_URL}`,
   methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
-
 app.use(cors(corsConfig));
 
 app.get('/api', (req, res) => {
@@ -31,6 +31,7 @@ app.post('/api/send_mail', (req, res) => {
   console.log('req body: ', req.body)
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.setHeader('Access-Control-Allow-Credentials', true);
   SendMail(req.body)
   return res.json({res: `Hello! mail sent to ${process.env.MAIL_USERNAME}`})
 });
