@@ -14,12 +14,15 @@ sendMail.get("/send_mail", async function (req, res) {
 });
 sendMail.post("/send_mail", async function (req, res) {
      const { subject, text } = req.body;
-     SendMailService.execute({ 
+     const result = await SendMailService.execute({ 
          subject: subject,
          text: text
-     });
-     //do something
-     res.status(200).send("Email sent");
+     })
+    if (result.accepted) {
+        res.status(200).send("Email sent successfully");
+    } else {
+        res.status(200).send("Error " + err);
+    }
 });
 
 export default sendMail;

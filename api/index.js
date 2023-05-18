@@ -10,7 +10,8 @@ const port = 3000;
 
 // Define CORS options
 const corsOptions = {
-  origin: process.env.FRONT_URL, // Replace with your front-end URL
+  // origin: process.env.FRONT_URL, // Replace with your front-end URL
+  origin: '*',
   methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
