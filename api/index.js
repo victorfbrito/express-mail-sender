@@ -23,19 +23,19 @@ const corsOptions = {
 };
 
 // Enable CORS for the specific route
-app.options('/api/send_mail', cors(corsOptions));
+app.options('/send_mail', cors(corsOptions));
 
-app.post('/api/send_mail', cors(corsOptions), (req, res) => {
+app.post('/send_mail', cors(corsOptions), (req, res) => {
   console.log('req body: ', req.body);
   SendMail(req.body);
   res.json({ res: `Hello! Mail sent to ${process.env.MAIL_USERNAME}` });
 });
 
-app.get('/api/send_mail', (req, res) => {
+app.get('/send_mail', (req, res) => {
   res.json({ res: 'test' });
 });
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.json({ msg: `Hello! Front-url: ${process.env.FRONT_URL}` });
 });
 
