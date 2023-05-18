@@ -13,11 +13,11 @@ const port = 3000
 app.use(express.json()); // Middleware for parsing request body as JSON
 
 const corsConfig = {
-  credentials: true,
   origin: `${process.env.FRONT_URL}`,
   methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
+
 app.use(cors(corsConfig));
 
 app.get('/api', (req, res) => {
