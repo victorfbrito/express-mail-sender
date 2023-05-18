@@ -10,13 +10,13 @@ dotenv.config()
 const app = express()
 const port = 3000
 
-app.use(express.json()); // Middleware for parsing request body as JSON
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", process.env.FRONT_URL); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
+// app.use(express.json()); // Middleware for parsing request body as JSON
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", process.env.FRONT_URL); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+app.use(cors())
 // const corsConfig = {
 //   origin: `${process.env.FRONT_URL}`,
 //   // origin: `http://localhost:5173`,
@@ -25,19 +25,14 @@ app.use(function(req, res, next) {
 // };
 // app.use(cors(corsConfig));
 
+app.options('/api/send_mail', cors())
+
 app.get('/api', (req, res) => {
-  const path = `/api/item/${v4()}`;
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.end(`Hello! Front-url: ${process.env.FRONT_URL}`);
+  res.json({msg: `Hello! Front-url: ${process.env.FRONT_URL}`});
 });
 
 app.post('/api/send_mail', (req, res) => {
   console.log('req body: ', req.body)
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   SendMail(req.body)
   return res.json({res: `Hello! mail sent to ${process.env.MAIL_USERNAME}`})
 });
