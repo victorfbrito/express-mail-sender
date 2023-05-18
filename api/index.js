@@ -11,13 +11,19 @@ const app = express()
 const port = 3000
 
 app.use(express.json()); // Middleware for parsing request body as JSON
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.FRONT_URL); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
-const corsConfig = {
-  origin: `${process.env.FRONT_URL}`,
-  methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Methods']
-};
-app.use(cors(corsConfig));
+// const corsConfig = {
+//   origin: `${process.env.FRONT_URL}`,
+//   // origin: `http://localhost:5173`,
+//   methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Methods']
+// };
+// app.use(cors(corsConfig));
 
 app.get('/api', (req, res) => {
   const path = `/api/item/${v4()}`;
