@@ -34,11 +34,11 @@ app.get('/api', (req, res) => {
 app.post('/api/send_mail', (req, res) => {
   console.log('req body: ', req.body)
   SendMail(req.body)
-  return res.json({res: `Hello! mail sent to ${process.env.MAIL_USERNAME}`})
+  res.json({res: `Hello! mail sent to ${process.env.MAIL_USERNAME}`})
 });
 
 app.get('/api/send_mail', (req, res) => {
-  return res.json({res: 'test'})
+  res.json({res: 'test'})
 });
 
 app.get('/api/', () => { console.log('test')})
