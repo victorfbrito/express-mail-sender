@@ -1,19 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { v4 } from "uuid";
 
-import { SendMail } from "./routes.js";
+import routes from "./routes.js";
 dotenv.config();
 
 const app = express();
 const port = 3000;
-
-// Enable CORS for all routes
-app.use(cors());
-
-// Middleware for parsing request body as JSON
-app.use(express.json());
 
 // Define CORS options
 const corsOptions = {
@@ -22,22 +15,13 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Enable CORS for the specific route
-app.options('/send_mail', cors(corsOptions));
+// Enable CORS for routes
+app.use(cors(corsOptions));
 
-app.post('/send_mail', cors(corsOptions), (req, res) => {
-  console.log('req body: ', req.body);
-  SendMail(req.body);
-  res.json({ res: `Hello! Mail sent to ${process.env.MAIL_USERNAME}` });
-});
+// Middleware for parsing request body as JSON
+app.use(express.json());
 
-app.get('/send_mail', (req, res) => {
-  res.json({ res: 'test' });
-});
-
-app.get('/', (req, res) => {
-  res.json({ msg: `Hello! Front-url: ${process.env.FRONT_URL}` });
-});
+app.use('/api', routes)
 
 app.listen(port, () => {
   console.log(`nodemailerProject is listening at http://localhost:${port}`);
